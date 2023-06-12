@@ -1,7 +1,7 @@
 #include "AppControl.h"
 #include <Arduino.h>
 #include <M5Stack.h>
-
+#include "MdLcd.h"// MdLcd.hをインクルードする
 MdLcd mlcd;//インスタンス化
 MdWBGTMonitor mwbgt;//インスタンス化
 MdMusicPlayer mmplay;//インスタンス化
@@ -101,22 +101,29 @@ void AppControl::displayTitleInit()
 //メニュー画面を表示
 void AppControl::displayMenuInit()
 {mlcd.displayJpgImageCoordinate(MENU_WBGT_IMG_PATH,MENU_WBGT_X_CRD,MENU_WBGT_Y_CRD);
+mlcd.displayJpgImageCoordinate(MENU_WBGT_IMG_PATH,MENU_WBGT_X_CRD,MENU_WBGT_Y_CRD);//熱中症画面を表示
+mlcd.displayJpgImageCoordinate(MENU_MUSIC_IMG_PATH,MENU_MUSIC_X_CRD,MENU_MUSIC_Y_CRD);//ミュージック画面を表示
+mlcd.displayJpgImageCoordinate(MENU_MEASURE_IMG_PATH,MENU_MEASURE_X_CRD,MENU_MEASURE_Y_CRD);//距離測定画面を表示
+mlcd.displayJpgImageCoordinate(MENU_DATE_IMG_PATH,MENU_DATE_X_CRD,MENU_DATE_Y_CRD);//距離測定画面を表示
+mlcd.displayJpgImageCoordinate(COMMON_BUTTON_DOWN_IMG_PATH,DOWN_X_CRD,UP_Y_CRD);//下矢印を表示
+mlcd.displayJpgImageCoordinate(COMMON_BUTTON_UP_IMG_PATH,UP_X_CRD,UP_Y_CRD);//上矢印を表示
+mlcd.displayJpgImageCoordinate(COMMON_BUTTON_DECIDE_IMG_PATH,DECIDE_X_CRD,DECIDE_Y_CRD);//決定を表示
 }
 
 void AppControl::focusChangeImg(FocusState current_state, FocusState next_state)
 {
 }
-//熱中症画面を表示
+
 void AppControl::displayWBGTInit()
-{mlcd.displayJpgImageCoordinate(MENU_WBGT_FOCUS_IMG_PATH,MENU_WBGT_X_CRD,MENU_WBGT_Y_CRD);
+{
 }
 
 void AppControl::displayTempHumiIndex()
 {
 }
-//ミュージック画面を表示
+
 void AppControl::displayMusicInit()
-{mlcd.displayJpgImageCoordinate(MENU_MUSIC_IMG_PATH,MENU_MUSIC_X_CRD,MENU_MUSIC_Y_CRD);
+{
 }
 
 void AppControl::displayMusicStop()
@@ -134,22 +141,11 @@ void AppControl::displayNextMusic()
 void AppControl::displayMusicPlay()
 {
 }
-//距離測定画面を表示
+
 void AppControl::displayMeasureInit()
-{mlcd.displayJpgImageCoordinate(MENU_MEASURE_IMG_PATH,MENU_MEASURE_X_CRD,MENU_MEASURE_Y_CRD);
+{
 }
-//下矢印を表示
-void AppControl::displaydownarrowInit()
-{mlcd.displayJpgImageCoordinate(COMMON_BUTTON_DOWN_IMG_PATH,DOWN_X_CRD,UP_Y_CRD);
-}
-//上矢印を表示
-void AppControl::displayuparrowInit()
-{mlcd.displayJpgImageCoordinate(COMMON_BUTTON_UP_IMG_PATH,UP_X_CRD,UP_Y_CRD);
-}
-//決定を表示
-void AppControl::displaydecisionInit()
-{mlcd.displayJpgImageCoordinate(COMMON_BUTTON_DECIDE_IMG_PATH,DECIDE_X_CRD,DECIDE_Y_CRD);
-}
+
 
 void AppControl::displayMeasureDistance()
 {
@@ -157,7 +153,7 @@ void AppControl::displayMeasureDistance()
 
 //時刻表示画面を表示
 void AppControl::displayDateInit()
-{mlcd.displayJpgImageCoordinate(MENU_DATE_IMG_PATH,MENU_DATE_X_CRD,MENU_DATE_Y_CRD);
+{
 }
 
 void AppControl::displayDateUpdate()
@@ -223,14 +219,7 @@ void AppControl::controlApplication()
                         //メニュー画面表示
                         mlcd.fillBackgroundWhite();//背景白に変更
                         displayMenuInit();
-                        
-                        displayMusicInit();//音楽プレイヤー
-                        displayMeasureInit();//距離測定
-                        displayDateInit();//時刻表示
-                        displaydownarrowInit();//下矢印
-                        displayuparrowInit();//上矢印
-                        displaydecisionInit();//決定
-
+                        setStateMachine(MENU, DO);
                 break;
 
             case DO:

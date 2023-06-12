@@ -42,13 +42,13 @@
 #define DATE_SLASH_IMG_PATH "/images/date/slash.jpg"//タイトル画面画像
 #define DATE_COLON_IMG_PATH "/images/date/colon.jpg"//タイトル画面画像
 
-#define COMMON_BUTTON_BACK_IMG_PATH "/images/common/button/back.jpg"//タイトル画面画像
-#define COMMON_BUTTON_DECIDE_IMG_PATH "/images/common/button/decide.jpg"//タイトル画面画像
-#define COMMON_BUTTON_DOWN_IMG_PATH "/images/common/button/down.jpg"//タイトル画面画像
-#define COMMON_BUTTON_NEXT_IMG_PATH "/images/common/button/next.jpg"//タイトル画面画像
-#define COMMON_BUTTON_PLAY_IMG_PATH "/images/common/button/play.jpg"//タイトル画面画像
-#define COMMON_BUTTON_STOP_IMG_PATH "/images/common/button/stop.jpg"//タイトル画面画像
-#define COMMON_BUTTON_UP_IMG_PATH "/images/common/button/up.jpg"//タイトル画面画像
+#define COMMON_BUTTON_BACK_IMG_PATH "/images/common/button/back.jpg"//戻る画像
+#define COMMON_BUTTON_DECIDE_IMG_PATH "/images/common/button/decide.jpg"//決定画像
+#define COMMON_BUTTON_DOWN_IMG_PATH "/images/common/button/down.jpg"//下画像
+#define COMMON_BUTTON_NEXT_IMG_PATH "/images/common/button/next.jpg"//次の曲画像
+#define COMMON_BUTTON_PLAY_IMG_PATH "/images/common/button/play.jpg"//再生画像
+#define COMMON_BUTTON_STOP_IMG_PATH "/images/common/button/stop.jpg"//停止画面画像
+#define COMMON_BUTTON_UP_IMG_PATH "/images/common/button/up.jpg"//上画像
 #define COMMON_BUTTON_FILLWHITE_IMG_PATH "/images/common/button/fillwhite.jpg"//タイトル画面画像
 
 #define COMMON_ORANGE1_IMG_PATH "/images/common/orange_number/1.jpg"//タイトル画面画像
@@ -91,6 +91,14 @@
 #define MENU_DATE_Y_CRD 150 //時刻プレーヤー画面Y座標
 #define MENU_MEASURE_X_CRD 0 //距離プレーヤー画面X座標
 #define MENU_MEASURE_Y_CRD 100 //距離プレーヤー画面Y座標
+
+#define UP_X_CRD 0 //上矢印X座標
+#define UP_Y_CRD 200 //上矢印Y座標
+
+#define DOWN_X_CRD 240//下矢印X座標
+#define DOWN_Y_CRD 200//下矢印Y座標
+#define DECIDE_X_CRD 120//決定X座標
+#define DECIDE_Y_CRD 200//決定Y座標
 
 // WBGT jpg image coordinate
 
