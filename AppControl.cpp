@@ -34,6 +34,9 @@ const char* g_str_blue[] = {
     COMMON_BLUE9_IMG_PATH,
 };
 
+
+
+
 //ボタンAが押されたら引数trueをもってくるのでフラグが変わる
 void AppControl::setBtnAFlg(bool flg)
 {
@@ -83,15 +86,22 @@ void AppControl::setStateMachine(State state, Action action)
     setAction(action);
 }
 
+
+
+//現在のフォーカス状態を取得するために使用
 FocusState AppControl::getFocusState()
 {
     return m_focus_state;
 }
-
+//フォーカス状態を設定するために使用
 void AppControl::setFocusState(FocusState fs)
 {
     m_focus_state = fs;
 }
+
+
+
+
 
 //タイトル画面を表示
 void AppControl::displayTitleInit()
@@ -100,7 +110,7 @@ void AppControl::displayTitleInit()
 
 //メニュー画面を表示
 void AppControl::displayMenuInit()
-{mlcd.displayJpgImageCoordinate(MENU_WBGT_IMG_PATH,MENU_WBGT_X_CRD,MENU_WBGT_Y_CRD);
+{
 mlcd.displayJpgImageCoordinate(MENU_WBGT_IMG_PATH,MENU_WBGT_X_CRD,MENU_WBGT_Y_CRD);//熱中症画面を表示
 mlcd.displayJpgImageCoordinate(MENU_MUSIC_IMG_PATH,MENU_MUSIC_X_CRD,MENU_MUSIC_Y_CRD);//ミュージック画面を表示
 mlcd.displayJpgImageCoordinate(MENU_MEASURE_IMG_PATH,MENU_MEASURE_X_CRD,MENU_MEASURE_Y_CRD);//距離測定画面を表示
@@ -110,8 +120,56 @@ mlcd.displayJpgImageCoordinate(COMMON_BUTTON_UP_IMG_PATH,UP_X_CRD,UP_Y_CRD);//�
 mlcd.displayJpgImageCoordinate(COMMON_BUTTON_DECIDE_IMG_PATH,DECIDE_X_CRD,DECIDE_Y_CRD);//決定を表示
 }
 
-void AppControl::focusChangeImg(FocusState current_state, FocusState next_state)
-{
+// ボタンの押下に応じてフラグを切り替え
+void AppControl::focusChangeImg(FocusState current_state, FocusState next_state){
+
+if(current_state == MENU_WBGT && next_state == MENU_MUSIC){
+    setFocusState(MENU_MUSIC);
+    mlcd.displayJpgImageCoordinate(MENU_MUSIC_FOCUS_IMG_PATH, MENU_MUSIC_X_CRD, MENU_MUSIC_Y_CRD);
+    mlcd.displayJpgImageCoordinate(MENU_WBGT_IMG_PATH, MENU_WBGT_X_CRD, MENU_WBGT_Y_CRD);
+  }
+  else if(current_state == MENU_MUSIC&&next_state == MENU_MEASURE){
+    setFocusState(MENU_MEASURE);
+    mlcd.displayJpgImageCoordinate(MENU_MEASURE_FOCUS_IMG_PATH, MENU_MEASURE_X_CRD, MENU_MEASURE_Y_CRD);
+    mlcd.displayJpgImageCoordinate(MENU_MUSIC_IMG_PATH, MENU_MUSIC_X_CRD, MENU_MUSIC_Y_CRD);
+  }
+  else if(current_state == MENU_MEASURE && next_state == MENU_DATE){
+    setFocusState(MENU_DATE);
+    mlcd.displayJpgImageCoordinate(MENU_DATE_FOCUS_IMG_PATH, MENU_DATE_X_CRD, MENU_DATE_Y_CRD);
+    mlcd.displayJpgImageCoordinate(MENU_MEASURE_IMG_PATH, MENU_MEASURE_X_CRD, MENU_MEASURE_Y_CRD);
+  }
+  else if(current_state == MENU_DATE&&next_state == MENU_WBGT){
+    setFocusState(MENU_WBGT);
+     mlcd.displayJpgImageCoordinate(MENU_WBGT_FOCUS_IMG_PATH, MENU_WBGT_X_CRD, MENU_WBGT_Y_CRD);
+     mlcd.displayJpgImageCoordinate(MENU_DATE_IMG_PATH, MENU_DATE_X_CRD, MENU_DATE_Y_CRD);
+  }
+  
+
+  else if(current_state == MENU_WBGT && next_state == MENU_DATE){
+    setFocusState(MENU_DATE);
+     mlcd.displayJpgImageCoordinate(MENU_DATE_FOCUS_IMG_PATH, MENU_DATE_X_CRD, MENU_DATE_Y_CRD);
+     mlcd.displayJpgImageCoordinate(MENU_WBGT_IMG_PATH, MENU_WBGT_X_CRD, MENU_WBGT_Y_CRD);
+  }
+
+  else if(current_state == MENU_DATE && next_state == MENU_MEASURE){
+    setFocusState(MENU_MEASURE);
+      mlcd.displayJpgImageCoordinate(MENU_MEASURE_FOCUS_IMG_PATH, MENU_MEASURE_X_CRD, MENU_MEASURE_Y_CRD);
+      mlcd.displayJpgImageCoordinate(MENU_DATE_IMG_PATH, MENU_DATE_X_CRD, MENU_DATE_Y_CRD);
+    
+  }
+  else if(current_state == MENU_MEASURE&&next_state == MENU_MUSIC){
+    setFocusState(MENU_MUSIC);
+     mlcd.displayJpgImageCoordinate(MENU_MUSIC_FOCUS_IMG_PATH, MENU_MUSIC_X_CRD, MENU_MUSIC_Y_CRD);
+     mlcd.displayJpgImageCoordinate(MENU_MEASURE_IMG_PATH, MENU_MEASURE_X_CRD, MENU_MEASURE_Y_CRD);
+  }
+  else if(current_state == MENU_MUSIC && next_state == MENU_WBGT){
+    setFocusState(MENU_WBGT);
+      mlcd.displayJpgImageCoordinate(MENU_WBGT_FOCUS_IMG_PATH, MENU_WBGT_X_CRD, MENU_WBGT_Y_CRD);
+      mlcd.displayJpgImageCoordinate(MENU_MUSIC_IMG_PATH, MENU_MUSIC_X_CRD, MENU_MUSIC_Y_CRD);
+    
+  }
+  
+    
 }
 
 void AppControl::displayWBGTInit()
@@ -151,7 +209,7 @@ void AppControl::displayMeasureDistance()
 {
 }
 
-//時刻表示画面を表示
+
 void AppControl::displayDateInit()
 {
 }
@@ -229,6 +287,96 @@ void AppControl::controlApplication()
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
                 delay(2000);
+
+                //ボタンを押すとm_focus_state = fs;を設定する
+                //m_focus_state = fs;だと画像の色を変える処理をする
+                //現在のフォーカス状態を取得するために使用
+          
+
+                //下矢印を押すと
+                if(m_flag_btnC_is_pressed){
+
+                 switch( getFocusState()){
+                 case MENU_WBGT:
+                  focusChangeImg(MENU_WBGT,MENU_MUSIC);
+                  setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
+                 
+                     break;
+                 case MENU_MUSIC:
+                  focusChangeImg(MENU_MUSIC,MENU_MEASURE);
+                  setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
+                 
+                   break;
+                  case MENU_MEASURE:
+                  focusChangeImg(MENU_MEASURE,MENU_DATE);
+                  setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
+                
+                         break;
+                    case MENU_DATE:
+                      focusChangeImg(MENU_DATE,MENU_WBGT);
+                      setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
+                 
+                    }
+
+                
+                }
+
+   
+                
+                //上矢印を押すと
+                if(m_flag_btnA_is_pressed){
+
+                 switch( getFocusState()){
+                 case MENU_WBGT:
+                  focusChangeImg(MENU_WBGT,MENU_DATE);
+                  setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
+               
+                     break;
+                 case MENU_DATE:
+                 focusChangeImg(MENU_DATE,MENU_MEASURE);
+                 setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
+                
+                   break;
+                  case MENU_MEASURE:
+                 focusChangeImg(MENU_MEASURE,MENU_MUSIC);
+                 setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
+                 
+                         break;
+                    case MENU_MUSIC:
+                     focusChangeImg(MENU_MUSIC,MENU_WBGT);
+                     setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
+              
+                    }
+
+                
+                }
+
+                //決定を押すと
+                if(m_flag_btnB_is_pressed){
+                 switch( getFocusState()){
+                 case MENU_WBGT:
+                  focusChangeImg(MENU_WBGT,MENU_DATE);
+                  setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
+               
+                     break;
+                 case MENU_DATE:
+                 focusChangeImg(MENU_DATE,MENU_MEASURE);
+                 setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
+                
+                   break;
+                  case MENU_MEASURE:
+                 focusChangeImg(MENU_MEASURE,MENU_MUSIC);
+                 setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
+                 
+                         break;
+                    case MENU_MUSIC:
+                     focusChangeImg(MENU_MUSIC,MENU_WBGT);
+                     setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
+              
+                    }
+                }
+
+
 
                 break;
 
