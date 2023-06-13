@@ -351,29 +351,9 @@ void AppControl::controlApplication()
                 
                 }
 
-                //決定を押すと
+                //決定を押すとステートマシン遷移する
                 if(m_flag_btnB_is_pressed){
-                 switch( getFocusState()){
-                 case MENU_WBGT:
-                  focusChangeImg(MENU_WBGT,MENU_DATE);
-                  setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
-               
-                     break;
-                 case MENU_DATE:
-                 focusChangeImg(MENU_DATE,MENU_MEASURE);
-                 setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
-                
-                   break;
-                  case MENU_MEASURE:
-                 focusChangeImg(MENU_MEASURE,MENU_MUSIC);
-                 setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
-                 
-                         break;
-                    case MENU_MUSIC:
-                     focusChangeImg(MENU_MUSIC,MENU_WBGT);
-                     setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
-              
-                    }
+                 setStateMachine(MENU, EXIT);
                 }
 
 
@@ -386,7 +366,39 @@ void AppControl::controlApplication()
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
                 delay(2000);
-            default:
+                
+            //フォーカス当たっているところへ移動する
+               
+                 switch( getFocusState()){
+                 case MENU_WBGT:
+                  //熱中症モニタ画面表示
+                        
+                        setStateMachine(WBGT, ENTRY);
+                         
+               
+                     break;
+                 case MENU_DATE:
+                 //熱中症モニタ画面表示
+                        
+                        setStateMachine(DATE, ENTRY);
+                         
+                
+                   break;
+                  case MENU_MEASURE:
+                 //熱中症モニタ画面表示
+                        
+                        setStateMachine(MEASURE, ENTRY);
+                        
+                 
+                         break;
+                    case MENU_MUSIC:
+                     //熱中症モニタ画面表示
+                       
+                        setStateMachine(MUSIC_STOP, ENTRY);
+                         
+                    }
+                
+
                 break;
             }
 
