@@ -23,24 +23,24 @@
 #define MENU_DATE_FOCUS_IMG_PATH "/images/menu/date_focus.jpg"//時刻表示青
 // WBGTjpg image path
 #define WBGT_SAFE_IMG_PATH "/images/wbgt/safe.jpg"//安全黄色画像
-#define WBGT_ATTENTION_IMG_PATH "/images/wbgt/attention.jpg"//タイトル画面画像
-#define WBGT_ALERT_IMG_PATH "/images/wbgt/alert.jpg"//タイトル画面画像
-#define WBGT_HIGH_ALERT_IMG_PATH "/images/wbgt/high_alert.jpg"//タイトル画面画像
-#define WBGT_DANGER_IMG_PATH "/images/wbgt/danger.jpg"//タイトル画面画像
+#define WBGT_ATTENTION_IMG_PATH "/images/wbgt/attention.jpg"//注意
+#define WBGT_ALERT_IMG_PATH "/images/wbgt/alert.jpg"//警戒
+#define WBGT_HIGH_ALERT_IMG_PATH "/images/wbgt/high_alert.jpg"//厳重警戒
+#define WBGT_DANGER_IMG_PATH "/images/wbgt/danger.jpg"//危険
 #define WBGT_TEMPERATURE_IMG_PATH "/images/wbgt/temperature.jpg"//タイトル画面画像
-#define WBGT_HUMIDITY_IMG_PATH "/images/wbgt/humidity.jpg"//タイトル画面画像
-#define WBGT_DEGREE_IMG_PATH "/images/wbgt/degree.jpg"//タイトル画面画像
-#define WBGT_PERCENT_IMG_PATH "/images/wbgt/percent.jpg"//タイトル画面画像
-
-#define MUSIC_NOWPLAYING_IMG_PATH "/images/music/nowplaying.jpg"//タイトル画面画像
-#define MUSIC_NOWSTOPPING_IMG_PATH "/images/music/nowstopping.jpg"//タイトル画面画像
-
-#define MEASURE_NOTICE_IMG_PATH "/images/measure/measure.jpg"//タイトル画面画像
-#define MEASURE_CM_IMG_PATH "/images/measure/cm.jpg"//タイトル画面画像
-
-#define DATE_NOTICE_IMG_PATH "/images/date/notice.jpg"//タイトル画面画像
-#define DATE_SLASH_IMG_PATH "/images/date/slash.jpg"//タイトル画面画像
-#define DATE_COLON_IMG_PATH "/images/date/colon.jpg"//タイトル画面画像
+#define WBGT_HUMIDITY_IMG_PATH "/images/wbgt/humidity.jpg"//湿度
+#define WBGT_DEGREE_IMG_PATH "/images/wbgt/degree.jpg"//C。
+#define WBGT_PERCENT_IMG_PATH "/images/wbgt/percent.jpg"//％
+// MUSICjpg image path
+#define MUSIC_NOWPLAYING_IMG_PATH "/images/music/nowplaying.jpg"//nowplaying
+#define MUSIC_NOWSTOPPING_IMG_PATH "/images/music/nowstopping.jpg"//nowstopping
+// MESUREjpg image path
+#define MEASURE_NOTICE_IMG_PATH "/images/measure/measure.jpg"//距離測定中
+#define MEASURE_CM_IMG_PATH "/images/measure/cm.jpg"//CM
+// DATEjpg image path
+#define DATE_NOTICE_IMG_PATH "/images/date/notice.jpg"//時刻表示
+#define DATE_SLASH_IMG_PATH "/images/date/slash.jpg"//スラッシュ
+#define DATE_COLON_IMG_PATH "/images/date/colon.jpg"//：
 
 #define COMMON_BUTTON_BACK_IMG_PATH "/images/common/button/back.jpg"//戻る画像
 #define COMMON_BUTTON_DECIDE_IMG_PATH "/images/common/button/decide.jpg"//決定画像
@@ -91,10 +91,10 @@
 #define MENU_DATE_Y_CRD 150 //時刻プレーヤー画面Y座標
 #define MENU_MEASURE_X_CRD 0 //距離プレーヤー画面X座標
 #define MENU_MEASURE_Y_CRD 100 //距離プレーヤー画面Y座標
-
+// MENU jpg image coordinate
 #define UP_X_CRD 0 //上矢印X座標
 #define UP_Y_CRD 200 //上矢印Y座標
-
+// MENU jpg image coordinate
 #define DOWN_X_CRD 240//下矢印X座標
 #define DOWN_Y_CRD 200//下矢印Y座標
 #define DECIDE_X_CRD 120//決定X座標
@@ -107,6 +107,13 @@
 // Measure jpg image coordinate
 
 // Date jpg image coordinate
+#define TIMEMENU_X_CRD 0//時刻表示X座標
+#define TIMEMENU_Y_CRD 0//時刻表示Y座標
+#define DAY_X_CRD 40//日時X座標
+#define DAY_Y_CRD 150//日時Y座標
+#define TIME_X_CRD 120//時間X座標
+#define TIME_Y_CRD 200//時間Y座標
+
 
 typedef enum {
     TITLE,

@@ -1,11 +1,13 @@
 #include "MdDateTime.h"
 #include <Arduino.h>
 
+//コンストラクター
 MdDateTime::MdDateTime()
 {
     Serial2.begin(9600);
 }
 
+//現在の日付の取得
 String MdDateTime::readDate()
 {
     int i = 0;
@@ -19,7 +21,7 @@ String MdDateTime::readDate()
     Serial.println(date);
     return String(date);
 }
-
+//現在の時刻の取得
 String MdDateTime::readTime()
 {
     int i = 0;

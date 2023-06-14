@@ -6,7 +6,7 @@
 class MdDateTime // classの定義
 {
 private: // privateはクラス内からしかアクセスできない
-    TinyGPSPlus gps;
+    TinyGPSPlus gps;//インスタンス
 
 public: // publicはどこからでもアクセス可能
     MdDateTime();

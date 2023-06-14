@@ -5,8 +5,10 @@
 MdLcd mlcd;//インスタンス化
 MdWBGTMonitor mwbgt;//インスタンス化
 MdMusicPlayer mmplay;//インスタンス化
-MdMeasureDistance mmdist;//インスタンス化
-MdDateTime mdtime;//インスタンス化
+//MdMeasureDistance mmdist;//インスタンス化
+
+MdDateTime mdtime;//MdDateTimeからインスタンスを生成
+
 
 const char* g_str_orange[] = {
     COMMON_ORANGE0_IMG_PATH,
@@ -209,17 +211,26 @@ void AppControl::displayMeasureDistance()
 {
 }
 
-
+//画面の初期化
 void AppControl::displayDateInit()
 {
+mlcd.fillBackgroundWhite();//背景白に変更
+mlcd.displayJpgImageCoordinate(DATE_NOTICE_IMG_PATH, TIMEMENU_X_CRD, TIMEMENU_Y_CRD);
+mlcd.displayJpgImageCoordinate(DATE_SLASH_IMG_PATH, DAY_X_CRD, DAY_Y_CRD);
+mlcd.displayJpgImageCoordinate(DATE_COLON_IMG_PATH, TIME_X_CRD, TIME_Y_CRD);
 }
 
 void AppControl::displayDateUpdate()
 {
+Serial.println(mdtime.readDate());
+Serial.println(mdtime.readTime());
+mlcd.displayDateText(mdtime.readDate(), 10, 100);
+mlcd.displayDateText(mdtime.readTime(), 40, 150);
 }
 
 void AppControl::controlApplication()
 {
+    mmplay.init();//音楽プレーヤーの初期化
     while (1) {
 
         switch (getState()) {
@@ -353,7 +364,9 @@ void AppControl::controlApplication()
 
                 //決定を押すとステートマシン遷移する
                 if(m_flag_btnB_is_pressed){
+                    setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
                  setStateMachine(MENU, EXIT);
+
                 }
 
 
@@ -525,9 +538,12 @@ void AppControl::controlApplication()
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
                 delay(2000);
+
+                //距離測定画面表示インクルードコメントアウトをはずす
+                //測定距離表示
                 break;
 
-            case DO:
+            case DO://何もしない
             Serial.println("MEASURE,DO");
             Serial.println(m_flag_btnA_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
@@ -535,7 +551,7 @@ void AppControl::controlApplication()
                 delay(2000);
                 break;
 
-            case EXIT:
+            case EXIT://何もしない
             Serial.println("MEASURE,EXIT");
             Serial.println(m_flag_btnA_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
@@ -549,7 +565,7 @@ void AppControl::controlApplication()
 
             break;
 
-        case DATE:
+        case DATE://
 
             switch (getAction()) {
             case ENTRY:
@@ -558,9 +574,14 @@ void AppControl::controlApplication()
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
                 delay(2000);
+
+                displayDateInit();//画面呼び出し
+                displayDateUpdate();
+                
+                
                 break;
 
-            case DO:
+            case DO://何もしない
             Serial.println("DATE,DO");
             Serial.println(m_flag_btnA_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
@@ -568,7 +589,7 @@ void AppControl::controlApplication()
                 delay(2000);
                 break;
 
-            case EXIT:
+            case EXIT://何もしない
             Serial.println("DATE,EXIT");
             Serial.println(m_flag_btnA_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
@@ -576,17 +597,11 @@ void AppControl::controlApplication()
                 delay(2000);
                 break;
 
-            default:
-            Serial.println("DATE,ENTRY");
-            Serial.println(m_flag_btnA_is_pressed);
-                Serial.println(m_flag_btnB_is_pressed);
-                Serial.println(m_flag_btnC_is_pressed);
-                delay(2000);
-                break;
+            
             }
 
-        default:
-            break;
+        
+            
         }
     }
 }
