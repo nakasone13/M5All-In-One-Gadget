@@ -109,10 +109,9 @@
 // Date jpg image coordinate
 #define TIMEMENU_X_CRD 0//時刻表示X座標
 #define TIMEMENU_Y_CRD 0//時刻表示Y座標
-#define DAY_X_CRD 40//日時X座標
-#define DAY_Y_CRD 150//日時Y座標
-#define TIME_X_CRD 120//時間X座標
-#define TIME_Y_CRD 200//時間Y座標
+#define DATEBACK_X_CRD 120//戻るX座標
+#define DATEBACK_Y_CRD 200//戻るY座標
+
 
 
 typedef enum {

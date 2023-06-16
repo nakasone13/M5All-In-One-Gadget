@@ -1,18 +1,15 @@
-/*#include "MdMeasureDistance.h"
+#include "MdMeasureDistance.h"
+#include "DrUltraSonic.h"
+#include "M5All-In-One-Gadget.h"
 
+DrUltraSonic drultrasonic=DrUltraSonic(ECHO_PIN ,TRIG_PIN);//DrUltraSonicクラスからインスタンス作成
 
-//距離測定
-double MdMeasureDistance:: getDistance() {
-  double t; //ｔはμ秒単位
-  double distance = 0;
+//距離を取得する
+double MdMeasureDistance::getDistance() {
+ double distance=0;
+ 
+ double t =drultrasonic.measureReturnTime();
 
-  /*超音波の発生
-  digitalWrite(TRIG, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(TRIG, LOW);
-
-  /*返ってくるまでの時間測定
-  t = pulseIn(ECHO, HIGH, 2000000); //ECHOピンのパルスがHIGHになった時間を変数tに格納
   if (t > 0) {
     distance = (340.0 / 1000000) * t * 0.5 * 100; //m→cmなので100倍する
   } 
@@ -20,6 +17,5 @@ double MdMeasureDistance:: getDistance() {
     distance = 0;
   }
 
-  return distance;
+ return distance;
 }
-*/

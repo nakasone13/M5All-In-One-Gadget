@@ -1,7 +1,7 @@
 /* インクルードガード */
 #pragma once
 
-#include "M5All-In-One-Gadget.h"
+#include"M5All-In-One-Gadget.h"
 #include <Arduino.h>
 
 class MdLcd // classの定義

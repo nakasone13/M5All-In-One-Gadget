@@ -5,9 +5,10 @@
 MdLcd mlcd;//インスタンス化
 MdWBGTMonitor mwbgt;//インスタンス化
 MdMusicPlayer mmplay;//インスタンス化
-//MdMeasureDistance mmdist;//インスタンス化
+MdMeasureDistance mmdist;//インスタンス化
 
 MdDateTime mdtime;//MdDateTimeからインスタンスを生成
+double g_drul=0;
 
 
 const char* g_str_orange[] = {
@@ -204,11 +205,17 @@ void AppControl::displayMusicPlay()
 
 void AppControl::displayMeasureInit()
 {
+mlcd.fillBackgroundWhite();//背景白に変更
+mlcd.displayJpgImageCoordinate(MEASURE_NOTICE_IMG_PATH, TIMEMENU_X_CRD, TIMEMENU_Y_CRD);
+mlcd.displayJpgImageCoordinate(COMMON_BUTTON_BACK_IMG_PATH, DATEBACK_X_CRD, DATEBACK_Y_CRD);
 }
-
 
 void AppControl::displayMeasureDistance()
 {
+    g_drul=mmdist.getDistance();
+delay(200);
+Serial.println(g_drul);
+
 }
 
 //画面の初期化
@@ -216,8 +223,8 @@ void AppControl::displayDateInit()
 {
 mlcd.fillBackgroundWhite();//背景白に変更
 mlcd.displayJpgImageCoordinate(DATE_NOTICE_IMG_PATH, TIMEMENU_X_CRD, TIMEMENU_Y_CRD);
-mlcd.displayJpgImageCoordinate(DATE_SLASH_IMG_PATH, DAY_X_CRD, DAY_Y_CRD);
-mlcd.displayJpgImageCoordinate(DATE_COLON_IMG_PATH, TIME_X_CRD, TIME_Y_CRD);
+mlcd.displayJpgImageCoordinate(COMMON_BUTTON_BACK_IMG_PATH, DATEBACK_X_CRD, DATEBACK_Y_CRD);
+
 }
 
 void AppControl::displayDateUpdate()
@@ -302,7 +309,8 @@ void AppControl::controlApplication()
                 //ボタンを押すとm_focus_state = fs;を設定する
                 //m_focus_state = fs;だと画像の色を変える処理をする
                 //現在のフォーカス状態を取得するために使用
-          
+           //setFocusState(MENU_WBGT);
+     //mlcd.displayJpgImageCoordinate(MENU_WBGT_FOCUS_IMG_PATH, MENU_WBGT_X_CRD, MENU_WBGT_Y_CRD);
 
                 //下矢印を押すと
                 if(m_flag_btnC_is_pressed){
@@ -537,10 +545,16 @@ void AppControl::controlApplication()
             Serial.println(m_flag_btnA_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
-                delay(2000);
-
-                //距離測定画面表示インクルードコメントアウトをはずす
+                displayMeasureInit();
+                displayMeasureDistance();
+                Serial.println(g_drul);
+                
                 //測定距離表示
+                //戻る処理
+                if(m_flag_btnA_is_pressed){
+                    setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
+                    setStateMachine(MEASURE, DO);
+                };
                 break;
 
             case DO://何もしない
@@ -548,7 +562,7 @@ void AppControl::controlApplication()
             Serial.println(m_flag_btnA_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
-                delay(2000);
+                setStateMachine(MEASURE, EXIT);
                 break;
 
             case EXIT://何もしない
@@ -556,7 +570,7 @@ void AppControl::controlApplication()
             Serial.println(m_flag_btnA_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
-                delay(2000);
+                setStateMachine(MENU, ENTRY);
                 break;
 
             default:
@@ -577,7 +591,10 @@ void AppControl::controlApplication()
 
                 displayDateInit();//画面呼び出し
                 displayDateUpdate();
-                
+                if(m_flag_btnA_is_pressed){
+                    setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
+                    setStateMachine(DATE, DO);
+                };
                 
                 break;
 
@@ -586,15 +603,15 @@ void AppControl::controlApplication()
             Serial.println(m_flag_btnA_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
-                delay(2000);
+                setStateMachine(DATE, EXIT);
                 break;
 
             case EXIT://何もしない
             Serial.println("DATE,EXIT");
-            Serial.println(m_flag_btnA_is_pressed);
+            Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
-                delay(2000);
+                setStateMachine(MENU, ENTRY);
                 break;
 
             
