@@ -105,6 +105,18 @@
 // Music jpg image coordinate
 
 // Measure jpg image coordinate
+#define THOUSANDSPLACE_X_CRD 10//千の位X座標
+#define THOUSANDSPLACE_Y_CRD 100//千の位Y座標
+#define TENSPLACE_X_CRD 53//十の位X座標
+#define TENSPLACE_Y_CRD 100//十の位Y座標
+#define ONESPLACE_X_CRD 96//一の位X座標
+#define ONESPLACE_Y_CRD 100//一の位Y座標
+#define DECIMALPOINT_X_CRD 139//小数点X座標
+#define DECIMALPOINT_Y_CRD 100//小数点Y座標
+#define FIRSTDECIMALPOINT_X_CRD 182//小数点第一位X座標
+#define FIRSTDECIMALPOINT_Y_CRD 100//小数点第一位Y座標
+#define CM_X_CRD 240//cmX座標
+#define CM_Y_CRD 100//cmY座標
 
 // Date jpg image coordinate
 #define TIMEMENU_X_CRD 0//時刻表示X座標

@@ -114,7 +114,7 @@ void AppControl::displayTitleInit()
 //メニュー画面を表示
 void AppControl::displayMenuInit()
 {
-mlcd.displayJpgImageCoordinate(MENU_WBGT_IMG_PATH,MENU_WBGT_X_CRD,MENU_WBGT_Y_CRD);//熱中症画面を表示
+mlcd.displayJpgImageCoordinate(MENU_WBGT_FOCUS_IMG_PATH,MENU_WBGT_X_CRD,MENU_WBGT_Y_CRD);//熱中症画面を表示
 mlcd.displayJpgImageCoordinate(MENU_MUSIC_IMG_PATH,MENU_MUSIC_X_CRD,MENU_MUSIC_Y_CRD);//ミュージック画面を表示
 mlcd.displayJpgImageCoordinate(MENU_MEASURE_IMG_PATH,MENU_MEASURE_X_CRD,MENU_MEASURE_Y_CRD);//距離測定画面を表示
 mlcd.displayJpgImageCoordinate(MENU_DATE_IMG_PATH,MENU_DATE_X_CRD,MENU_DATE_Y_CRD);//距離測定画面を表示
@@ -203,29 +203,191 @@ void AppControl::displayMusicPlay()
 {
 }
 
-void AppControl::displayMeasureInit()
-{
-mlcd.fillBackgroundWhite();//背景白に変更
-mlcd.displayJpgImageCoordinate(MEASURE_NOTICE_IMG_PATH, TIMEMENU_X_CRD, TIMEMENU_Y_CRD);
-mlcd.displayJpgImageCoordinate(COMMON_BUTTON_BACK_IMG_PATH, DATEBACK_X_CRD, DATEBACK_Y_CRD);
-}
-
-void AppControl::displayMeasureDistance()
-{
-    g_drul=mmdist.getDistance();
-delay(200);
-Serial.println(g_drul);
-
-}
-
 //画面の初期化
 void AppControl::displayDateInit()
 {
 mlcd.fillBackgroundWhite();//背景白に変更
 mlcd.displayJpgImageCoordinate(DATE_NOTICE_IMG_PATH, TIMEMENU_X_CRD, TIMEMENU_Y_CRD);
 mlcd.displayJpgImageCoordinate(COMMON_BUTTON_BACK_IMG_PATH, DATEBACK_X_CRD, DATEBACK_Y_CRD);
+}
+
+
+
+
+void AppControl::displayMeasureDistance()
+{
+    g_drul=mmdist.getDistance();
+delay(200);
+//測定距離表示        
+            mlcd.displayJpgImageCoordinate(COMMON_BLUEDOT_IMG_PATH, DECIMALPOINT_X_CRD, DECIMALPOINT_Y_CRD);//小数点
+        //g_drulはグローバル宣言メジャーディスタンス関数により小数点第二位までの数字を代入済
+        Serial.println("g_drul=");
+        Serial.println(g_drul);
+        int num[4] = { 0 };
+	    // 各桁を取り出す
+    
+	    //num[0] = g_drul / 1000;
+	    if (0<static_cast<int>(g_drul / 100) % 10){
+       num[0] = static_cast<int>(g_drul / 100) % 10;}//百の位
+        if(0<static_cast<int>(g_drul / 10) % 10){
+        num[1]= static_cast<int>(g_drul / 10) % 10;}//十の位
+        if(0<static_cast<int>(g_drul) % 10){
+        num[2] =static_cast<int>(g_drul) % 10;}// 一の位
+	
+        num[3] =static_cast<int>(g_drul * 10) % 10;// 少数第一の位
+
+        //  double decimalPart = (g_drul - static_cast<int>(g_drul)) * 10; // 小数部分の一桁を取り出す
+        // double decimalFirstDigit = static_cast<int>(decimalPart);       // 小数点第一位の数字
+        Serial.println(num[0]);
+        Serial.println(num[1]);
+        Serial.println(num[2]);
+        Serial.println(num[3]);
+        delay(2000);
+
+
+
+            switch(num[0]){
+         case 1:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE1_IMG_PATH, THOUSANDSPLACE_X_CRD, THOUSANDSPLACE_Y_CRD);
+
+        case 2:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE2_IMG_PATH, THOUSANDSPLACE_X_CRD, THOUSANDSPLACE_Y_CRD);
+        case 3:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE3_IMG_PATH, THOUSANDSPLACE_X_CRD, THOUSANDSPLACE_Y_CRD);
+        case 4:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE4_IMG_PATH, THOUSANDSPLACE_X_CRD, THOUSANDSPLACE_Y_CRD);
+        case 5:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE5_IMG_PATH, THOUSANDSPLACE_X_CRD, THOUSANDSPLACE_Y_CRD);
+        case 6:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE6_IMG_PATH, THOUSANDSPLACE_X_CRD, THOUSANDSPLACE_Y_CRD);
+        case 7:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE7_IMG_PATH, THOUSANDSPLACE_X_CRD, THOUSANDSPLACE_Y_CRD);
+        case 8:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE8_IMG_PATH, THOUSANDSPLACE_X_CRD, THOUSANDSPLACE_Y_CRD);
+        case 9:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE9_IMG_PATH, THOUSANDSPLACE_X_CRD, THOUSANDSPLACE_Y_CRD);
+        case 0:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE0_IMG_PATH, THOUSANDSPLACE_X_CRD, THOUSANDSPLACE_Y_CRD);
+    
+        }
+        switch(num[1]){
+        case 1:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE1_IMG_PATH, TENSPLACE_X_CRD, TENSPLACE_Y_CRD);
+
+        case 2:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE2_IMG_PATH, TENSPLACE_X_CRD, TENSPLACE_Y_CRD);
+        case 3:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE3_IMG_PATH, TENSPLACE_X_CRD, TENSPLACE_Y_CRD);
+        case 4:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE4_IMG_PATH, TENSPLACE_X_CRD, TENSPLACE_Y_CRD);
+        case 5:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE5_IMG_PATH, TENSPLACE_X_CRD, TENSPLACE_Y_CRD);
+        case 6:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE6_IMG_PATH, TENSPLACE_X_CRD, TENSPLACE_Y_CRD);
+        case 7:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE7_IMG_PATH, TENSPLACE_X_CRD, TENSPLACE_Y_CRD);
+        case 8:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE8_IMG_PATH, TENSPLACE_X_CRD, TENSPLACE_Y_CRD);
+        case 9:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE9_IMG_PATH, TENSPLACE_X_CRD, TENSPLACE_Y_CRD);
+        case 0:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE0_IMG_PATH, TENSPLACE_X_CRD, TENSPLACE_Y_CRD);
+    
+        }
+        switch(num[2]){
+        case 1:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE1_IMG_PATH, ONESPLACE_X_CRD, ONESPLACE_Y_CRD);
+
+        case 2:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE2_IMG_PATH, ONESPLACE_X_CRD, ONESPLACE_Y_CRD);
+        case 3:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE3_IMG_PATH, ONESPLACE_X_CRD, ONESPLACE_Y_CRD);
+        case 4:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE4_IMG_PATH, ONESPLACE_X_CRD, ONESPLACE_Y_CRD);
+        case 5:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE5_IMG_PATH, ONESPLACE_X_CRD, ONESPLACE_Y_CRD);
+        case 6:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE6_IMG_PATH, ONESPLACE_X_CRD, ONESPLACE_Y_CRD);
+        case 7:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE7_IMG_PATH, ONESPLACE_X_CRD, ONESPLACE_Y_CRD);
+        case 8:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE8_IMG_PATH, ONESPLACE_X_CRD, ONESPLACE_Y_CRD);
+        case 9:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE9_IMG_PATH, ONESPLACE_X_CRD, ONESPLACE_Y_CRD);
+        case 0:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE0_IMG_PATH, ONESPLACE_X_CRD, ONESPLACE_Y_CRD);
+    
+        }
+        switch(num[3]){
+        case 1:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE1_IMG_PATH, FIRSTDECIMALPOINT_X_CRD, FIRSTDECIMALPOINT_Y_CRD);
+
+        case 2:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE2_IMG_PATH, FIRSTDECIMALPOINT_X_CRD, FIRSTDECIMALPOINT_Y_CRD);
+        case 3:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE3_IMG_PATH, FIRSTDECIMALPOINT_X_CRD, FIRSTDECIMALPOINT_Y_CRD);
+        case 4:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE4_IMG_PATH, FIRSTDECIMALPOINT_X_CRD, FIRSTDECIMALPOINT_Y_CRD);
+        case 5:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE5_IMG_PATH, FIRSTDECIMALPOINT_X_CRD, FIRSTDECIMALPOINT_Y_CRD);
+        case 6:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE6_IMG_PATH, FIRSTDECIMALPOINT_X_CRD, FIRSTDECIMALPOINT_Y_CRD);
+        case 7:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE7_IMG_PATH, FIRSTDECIMALPOINT_X_CRD, FIRSTDECIMALPOINT_Y_CRD);
+        case 8:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE8_IMG_PATH, FIRSTDECIMALPOINT_X_CRD, FIRSTDECIMALPOINT_Y_CRD);
+        case 9:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE9_IMG_PATH, FIRSTDECIMALPOINT_X_CRD, FIRSTDECIMALPOINT_Y_CRD);
+        case 0:
+        mlcd.displayJpgImageCoordinate(COMMON_BLUE0_IMG_PATH, FIRSTDECIMALPOINT_X_CRD, FIRSTDECIMALPOINT_Y_CRD);
+    
+        }
+}
+
+void AppControl::displayMeasureInit()
+{
+mlcd.fillBackgroundWhite();//背景白に変更
+mlcd.displayJpgImageCoordinate(MEASURE_NOTICE_IMG_PATH, TIMEMENU_X_CRD, TIMEMENU_Y_CRD);
+mlcd.displayJpgImageCoordinate(COMMON_BUTTON_BACK_IMG_PATH, DATEBACK_X_CRD, DATEBACK_Y_CRD);
+
+
+
+
+
+    
+}
+
+/*
+int digit;
+for(int i=0;i=digit;i++){
+ g_drul=g_drul%10
+digit++;
+   int[digit]=g_drul;//配列に逆からの数値を埋め込む
+}
+
+// 小数部分の各桁の数字を取り出して配列に格納（逆順）
+while (digit < 10 && g_drul != 0.0) {
+    int temp = static_cast<int>(g_drul * 10); // 一桁分の数字を取得
+    x[digit] = temp; // 配列に逆順で格納
+    g_drul = (g_drul * 10) - temp; // 小数部分から取り出した桁を減算
+    digit++;
+}
+
+for(int i=0;i<digit/2;i++){
+ int temp=x[i];//作業用変数t
+ x[i]=x[digit-i-1];//最初の桁の数字を最後の桁の数字と交換
+ x[digit-i-1]=temp;
+ Serial.println("反転成功");
+Serial.println("g_drul=");
+Serial.println(g_drul);
 
 }
+*/
+
+
+
+
+
 
 void AppControl::displayDateUpdate()
 {
@@ -289,7 +451,7 @@ void AppControl::controlApplication()
                 Serial.println(m_flag_btnA_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
-                delay(2000);
+                
                 Serial.println("MENU,ENTRY");
 
                         //メニュー画面表示
@@ -304,7 +466,7 @@ void AppControl::controlApplication()
                 Serial.println(m_flag_btnA_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
-                delay(2000);
+                
 
                 //ボタンを押すとm_focus_state = fs;を設定する
                 //m_focus_state = fs;だと画像の色を変える処理をする
@@ -386,7 +548,7 @@ void AppControl::controlApplication()
                 Serial.println(m_flag_btnA_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
-                delay(2000);
+                
                 
             //フォーカス当たっているところへ移動する
                
@@ -547,9 +709,9 @@ void AppControl::controlApplication()
                 Serial.println(m_flag_btnC_is_pressed);
                 displayMeasureInit();
                 displayMeasureDistance();
-                Serial.println(g_drul);
+        
                 
-                //測定距離表示
+                
                 //戻る処理
                 if(m_flag_btnA_is_pressed){
                     setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
@@ -573,8 +735,8 @@ void AppControl::controlApplication()
                 setStateMachine(MENU, ENTRY);
                 break;
 
-            default:
-                break;
+            
+                
             }
 
             break;
