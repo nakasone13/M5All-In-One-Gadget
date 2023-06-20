@@ -11,8 +11,8 @@ AudioFileSourceID3* id3;
 
 File musicfolder;
 File entry;
-
-void MdMusicPlayer::init()
+//musicフォルダを開き、次に再生する楽曲を グローバル変数entry にセットする。
+void MdMusicPlayer::init()//音楽プレイヤーの初期化
 {
     //pinMode(10, OUTPUT);
 
@@ -25,13 +25,15 @@ void MdMusicPlayer::init()
         entry = musicfolder.openNextFile();
     }
 }
-
-char* MdMusicPlayer::getTitle()
+//グローバル変数entry　にセットされた楽曲のファイル名を取得しそれを返す。
+char* MdMusicPlayer::getTitle()//音楽ファイルのファイル名を表示する
 {
     return (char*)entry.name();
 }
 
-void MdMusicPlayer::selectNextMusic()
+
+//グローバル変数entry に次の楽曲をセットする。次の音楽ファイルがない場合、フォルダの先頭に戻り一番最初のファイルを次の楽曲としてセットする。
+void MdMusicPlayer::selectNextMusic()//次の音楽ファイルを開く
 {
     entry = musicfolder.openNextFile();
     if (!entry) {
@@ -40,8 +42,8 @@ void MdMusicPlayer::selectNextMusic()
         Serial.println("return latestfile");
     }
 }
-
-void MdMusicPlayer::prepareMP3()
+//グローバル変数file, id3, out, mp3 の各クラスのインスタンスを生成し、そのアドレスを格納する音楽ファイルのデコードを開始する。
+void MdMusicPlayer::prepareMP3()//音楽ファイルの再生に必要なインスタンスの生成とデコードを開始する
 {
     file = new AudioFileSourceSD(entry.path());
     id3 = new AudioFileSourceID3(file);
@@ -51,18 +53,18 @@ void MdMusicPlayer::prepareMP3()
     mp3 = new AudioGeneratorMP3();
     mp3->begin(id3, out);
 }
-
-bool MdMusicPlayer::isRunningMP3()
+//音楽ファイルが現在デコード中かを確認し、デコード中ならtrue、そうでないならfalseを返す。
+bool MdMusicPlayer::isRunningMP3()//音楽ファイルを再生中か確認する
 {
     return mp3->isRunning();
 }
-
-bool MdMusicPlayer::playMP3()
+//音楽ファイルを再生するために楽曲データのデコードを行う。次のデータがある場合はtrue、データがない（楽曲の終了時）はfalseを返す
+bool MdMusicPlayer::playMP3()//音楽ファイルを再生する
 {
     return mp3->loop();
 }
-
-void MdMusicPlayer::stopMP3()
+//音楽ファイルのデコードを停止する。
+void MdMusicPlayer::stopMP3()//音楽ファイルの再生を停止する
 {
     mp3->stop();
 }

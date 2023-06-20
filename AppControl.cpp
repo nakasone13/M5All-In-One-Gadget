@@ -184,31 +184,46 @@ void AppControl::displayTempHumiIndex()
 }
 
 void AppControl::displayMusicInit()
-{
+{mlcd.fillBackgroundWhite();//背景白に変更
+mlcd.displayJpgImageCoordinate(COMMON_BUTTON_PLAY_IMG_PATH, PLAY_X_CRD, PLAY_Y_CRD);//再生
+mlcd.displayJpgImageCoordinate(COMMON_BUTTON_BACK_IMG_PATH, DATEBACK_X_CRD, DATEBACK_Y_CRD);//戻る
+mlcd.displayJpgImageCoordinate(COMMON_BUTTON_NEXT_IMG_PATH, NEXTSONG_X_CRD, NEXTSONG_Y_CRD);//次の曲
+mlcd.displayJpgImageCoordinate(MUSIC_NOWSTOPPING_IMG_PATH, NOWSTOPPING_X_CRD, NOWSTOPPING_Y_CRD);//NOWSTOPPING
 }
 
 void AppControl::displayMusicStop()
-{
+{mmplay.stopMP3();
 }
 
 void AppControl::displayMusicTitle()
-{
+{mmplay.getTitle();
 }
 
 void AppControl::displayNextMusic()
-{
+{mmplay.selectNextMusic();
 }
 
 void AppControl::displayMusicPlay()
-{
+{mmplay.prepareMP3();//音楽ファイルの再生に必要なインスタンスの生成とデコードを開始する
+//音楽ファイルが現在デコード中かを確認し、デコード中ならtrue、を返す
+if(mmplay.isRunningMP3()){//再生中なら
+    mmplay.stopMP3();//STOP処理
+}else{mmplay.prepareMP3();//そうでなければ再生
+
+}
+if(mmplay.playMP3()){//次の曲がある場合は
+    selectNextMusic();//次の音楽ファイルを開く
+    else
+
+};
 }
 
 //画面の初期化
 void AppControl::displayDateInit()
 {
 mlcd.fillBackgroundWhite();//背景白に変更
-mlcd.displayJpgImageCoordinate(DATE_NOTICE_IMG_PATH, TIMEMENU_X_CRD, TIMEMENU_Y_CRD);
-mlcd.displayJpgImageCoordinate(COMMON_BUTTON_BACK_IMG_PATH, DATEBACK_X_CRD, DATEBACK_Y_CRD);
+mlcd.displayJpgImageCoordinate(DATE_NOTICE_IMG_PATH, DATEBACK_X_CRD, DATEBACK_Y_CRD);//戻る
+mlcd.displayJpgImageCoordinate(COMMON_BUTTON_BACK_IMG_PATH, PLAY_X_CRD, PLAY_Y_CRD);
 }
 
 
@@ -218,7 +233,8 @@ void AppControl::displayMeasureDistance()
 {
     g_drul=mmdist.getDistance();
 delay(200);
-//測定距離表示        
+//測定距離表示      
+            mlcd.displayJpgImageCoordinate(MEASURE_CM_IMG_PATH, CM_X_CRD, CM_Y_CRD);//cm
             mlcd.displayJpgImageCoordinate(COMMON_BLUEDOT_IMG_PATH, DECIMALPOINT_X_CRD, DECIMALPOINT_Y_CRD);//小数点
         //g_drulはグローバル宣言メジャーディスタンス関数により小数点第二位までの数字を代入済
         Serial.println("g_drul=");
@@ -249,112 +265,145 @@ delay(200);
             switch(num[0]){
          case 1:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE1_IMG_PATH, THOUSANDSPLACE_X_CRD, THOUSANDSPLACE_Y_CRD);
-
+        break;
         case 2:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE2_IMG_PATH, THOUSANDSPLACE_X_CRD, THOUSANDSPLACE_Y_CRD);
+        break;
         case 3:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE3_IMG_PATH, THOUSANDSPLACE_X_CRD, THOUSANDSPLACE_Y_CRD);
+        break;
         case 4:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE4_IMG_PATH, THOUSANDSPLACE_X_CRD, THOUSANDSPLACE_Y_CRD);
+        break;
         case 5:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE5_IMG_PATH, THOUSANDSPLACE_X_CRD, THOUSANDSPLACE_Y_CRD);
+        break;
         case 6:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE6_IMG_PATH, THOUSANDSPLACE_X_CRD, THOUSANDSPLACE_Y_CRD);
+        break;
         case 7:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE7_IMG_PATH, THOUSANDSPLACE_X_CRD, THOUSANDSPLACE_Y_CRD);
+        break;
         case 8:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE8_IMG_PATH, THOUSANDSPLACE_X_CRD, THOUSANDSPLACE_Y_CRD);
+        break;
         case 9:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE9_IMG_PATH, THOUSANDSPLACE_X_CRD, THOUSANDSPLACE_Y_CRD);
+        break;
         case 0:
-        mlcd.displayJpgImageCoordinate(COMMON_BLUE0_IMG_PATH, THOUSANDSPLACE_X_CRD, THOUSANDSPLACE_Y_CRD);
+        //mlcd.displayJpgImageCoordinate(COMMON_BLUE0_IMG_PATH, THOUSANDSPLACE_X_CRD, THOUSANDSPLACE_Y_CRD);
+        break;
     
         }
         switch(num[1]){
         case 1:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE1_IMG_PATH, TENSPLACE_X_CRD, TENSPLACE_Y_CRD);
+        break;
 
         case 2:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE2_IMG_PATH, TENSPLACE_X_CRD, TENSPLACE_Y_CRD);
+        break;
         case 3:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE3_IMG_PATH, TENSPLACE_X_CRD, TENSPLACE_Y_CRD);
+        break;
         case 4:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE4_IMG_PATH, TENSPLACE_X_CRD, TENSPLACE_Y_CRD);
+        break;
         case 5:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE5_IMG_PATH, TENSPLACE_X_CRD, TENSPLACE_Y_CRD);
+        break;
         case 6:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE6_IMG_PATH, TENSPLACE_X_CRD, TENSPLACE_Y_CRD);
+        break;
         case 7:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE7_IMG_PATH, TENSPLACE_X_CRD, TENSPLACE_Y_CRD);
+        break;
         case 8:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE8_IMG_PATH, TENSPLACE_X_CRD, TENSPLACE_Y_CRD);
+        break;
         case 9:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE9_IMG_PATH, TENSPLACE_X_CRD, TENSPLACE_Y_CRD);
+        break;
         case 0:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE0_IMG_PATH, TENSPLACE_X_CRD, TENSPLACE_Y_CRD);
+        break;
     
         }
         switch(num[2]){
         case 1:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE1_IMG_PATH, ONESPLACE_X_CRD, ONESPLACE_Y_CRD);
+        break;
 
         case 2:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE2_IMG_PATH, ONESPLACE_X_CRD, ONESPLACE_Y_CRD);
+        break;
         case 3:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE3_IMG_PATH, ONESPLACE_X_CRD, ONESPLACE_Y_CRD);
+        break;
         case 4:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE4_IMG_PATH, ONESPLACE_X_CRD, ONESPLACE_Y_CRD);
+        break;
         case 5:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE5_IMG_PATH, ONESPLACE_X_CRD, ONESPLACE_Y_CRD);
+        break;
         case 6:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE6_IMG_PATH, ONESPLACE_X_CRD, ONESPLACE_Y_CRD);
+        break;
         case 7:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE7_IMG_PATH, ONESPLACE_X_CRD, ONESPLACE_Y_CRD);
+        break;
         case 8:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE8_IMG_PATH, ONESPLACE_X_CRD, ONESPLACE_Y_CRD);
+        break;
         case 9:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE9_IMG_PATH, ONESPLACE_X_CRD, ONESPLACE_Y_CRD);
+        break;
         case 0:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE0_IMG_PATH, ONESPLACE_X_CRD, ONESPLACE_Y_CRD);
+        break;
     
         }
         switch(num[3]){
         case 1:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE1_IMG_PATH, FIRSTDECIMALPOINT_X_CRD, FIRSTDECIMALPOINT_Y_CRD);
+        break;
 
         case 2:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE2_IMG_PATH, FIRSTDECIMALPOINT_X_CRD, FIRSTDECIMALPOINT_Y_CRD);
+        break;
         case 3:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE3_IMG_PATH, FIRSTDECIMALPOINT_X_CRD, FIRSTDECIMALPOINT_Y_CRD);
+        break;
         case 4:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE4_IMG_PATH, FIRSTDECIMALPOINT_X_CRD, FIRSTDECIMALPOINT_Y_CRD);
+        break;
         case 5:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE5_IMG_PATH, FIRSTDECIMALPOINT_X_CRD, FIRSTDECIMALPOINT_Y_CRD);
+        break;
         case 6:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE6_IMG_PATH, FIRSTDECIMALPOINT_X_CRD, FIRSTDECIMALPOINT_Y_CRD);
+        break;
         case 7:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE7_IMG_PATH, FIRSTDECIMALPOINT_X_CRD, FIRSTDECIMALPOINT_Y_CRD);
+       
+        break;
         case 8:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE8_IMG_PATH, FIRSTDECIMALPOINT_X_CRD, FIRSTDECIMALPOINT_Y_CRD);
+        break;
         case 9:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE9_IMG_PATH, FIRSTDECIMALPOINT_X_CRD, FIRSTDECIMALPOINT_Y_CRD);
+        break;
         case 0:
         mlcd.displayJpgImageCoordinate(COMMON_BLUE0_IMG_PATH, FIRSTDECIMALPOINT_X_CRD, FIRSTDECIMALPOINT_Y_CRD);
+        break;
     
         }
 }
 
 void AppControl::displayMeasureInit()
 {
-mlcd.fillBackgroundWhite();//背景白に変更
 mlcd.displayJpgImageCoordinate(MEASURE_NOTICE_IMG_PATH, TIMEMENU_X_CRD, TIMEMENU_Y_CRD);
 mlcd.displayJpgImageCoordinate(COMMON_BUTTON_BACK_IMG_PATH, DATEBACK_X_CRD, DATEBACK_Y_CRD);
-
-
-
-
-
-    
 }
 
 /*
@@ -632,7 +681,8 @@ void AppControl::controlApplication()
             Serial.println(m_flag_btnA_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
-                delay(2000);
+                displayMusicInit();
+                setStateMachine(MUSIC_STOP, DO);
                 //音楽再生
             //停止画面表示
             //現在の曲表示
@@ -643,8 +693,7 @@ void AppControl::controlApplication()
             Serial.println(m_flag_btnA_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
-                delay(2000);
-            //右ボタンを押下→次の曲を表示
+             setStateMachine(MUSIC_STOP, EXIT);
                 break;
 
             case EXIT:
@@ -652,16 +701,25 @@ void AppControl::controlApplication()
             Serial.println(m_flag_btnA_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
-                delay(2000);
+
+                //再生を押すとステートマシン遷移する
+                if(m_flag_btnA_is_pressed){
+                    setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
+                delay(200);
+                 setStateMachine(MUSIC_PLAY, ENTRY);
+                }
+                //戻るを押すとステートマシン遷移する
+                if(m_flag_btnB_is_pressed){
+                    setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
+                 setStateMachine(MENU, ENTRY);
+                }
+                //次の曲を押すとステートマシン遷移する
+                if(m_flag_btnC_is_pressed){
+                    setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
+                 setStateMachine(MENU, ENTRY);
+                }
                 break;
 
-            default:
-            Serial.println("MUSIC_STOP,default");
-            Serial.println(m_flag_btnA_is_pressed);
-                Serial.println(m_flag_btnB_is_pressed);
-                Serial.println(m_flag_btnC_is_pressed);
-                delay(2000);
-                break;
             }
 
             break;
@@ -674,7 +732,10 @@ void AppControl::controlApplication()
             Serial.println(m_flag_btnA_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
-                delay(2000);
+                mlcd.fillBackgroundWhite();//背景白に変更
+                mlcd.displayJpgImageCoordinate(COMMON_BUTTON_STOP_IMG_PATH, PLAY_X_CRD, PLAY_Y_CRD);//再生
+                mlcd.displayJpgImageCoordinate(MUSIC_NOWPLAYING_IMG_PATH, NOWSTOPPING_X_CRD, NOWSTOPPING_Y_CRD);//NOWPlaying
+                setStateMachine(MUSIC_PLAY, DO);
                 break;
 
             case DO:
@@ -682,7 +743,13 @@ void AppControl::controlApplication()
             Serial.println(m_flag_btnA_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
-                delay(2000);
+                //音楽再生処理
+                displayMusicPlay();
+                if(m_flag_btnA_is_pressed){
+                    setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
+                
+                 setStateMachine(MUSIC_PLAY, EXIT);
+                }
                 break;
 
             case EXIT:
@@ -690,7 +757,7 @@ void AppControl::controlApplication()
             Serial.println(m_flag_btnA_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
-                delay(2000);
+                setStateMachine(MUSIC_STOP, ENTRY);
                 break;
 
             default:
@@ -707,24 +774,31 @@ void AppControl::controlApplication()
             Serial.println(m_flag_btnA_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
-                displayMeasureInit();
-                displayMeasureDistance();
+                
+                mlcd.fillBackgroundWhite();//背景白に変更
+                Serial.println("背景白に変更");
+                
         
                 
+                setStateMachine(MEASURE, DO);
                 
-                //戻る処理
-                if(m_flag_btnA_is_pressed){
-                    setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
-                    setStateMachine(MEASURE, DO);
-                };
+                
                 break;
 
             case DO://何もしない
-            Serial.println("MEASURE,DO");
-            Serial.println(m_flag_btnA_is_pressed);
+                Serial.println("MEASURE,DO");
+                 Serial.println(m_flag_btnA_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
-                setStateMachine(MEASURE, EXIT);
+
+                displayMeasureInit();
+                displayMeasureDistance();
+                //戻る処理
+                if(m_flag_btnB_is_pressed){
+                    setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
+                    setStateMachine(MEASURE, EXIT);
+                };
+
                 break;
 
             case EXIT://何もしない
@@ -753,7 +827,7 @@ void AppControl::controlApplication()
 
                 displayDateInit();//画面呼び出し
                 displayDateUpdate();
-                if(m_flag_btnA_is_pressed){
+                if(m_flag_btnB_is_pressed){
                     setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
                     setStateMachine(DATE, DO);
                 };

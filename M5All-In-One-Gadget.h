@@ -103,6 +103,16 @@
 // WBGT jpg image coordinate
 
 // Music jpg image coordinate
+#define PLAY_X_CRD 0//再生X座標
+#define PLAY_Y_CRD 200//再生Y座標
+#define NOWSTOPPING_X_CRD 0//NOWSTOPPPINGX座標
+#define NOWSTOPPING_Y_CRD 0//NOWSTOPPPINGY座標
+#define NEXTSONG_X_CRD 240//NEXTSONGX座標
+#define NEXTSONG_Y_CRD 200//NEXTSONGY座標
+#define NOWPLAYYING_X_CRD 0//NOWPLAYYING座標
+#define NOWPLAYYING_Y_CRD 0//NOWPLAYYING座標
+#define SONGNAME_X_CRD 10//NOWPLAYYING座標
+#define SONGNAME_Y_CRD 120//NOWPLAYYING座標
 
 // Measure jpg image coordinate
 #define THOUSANDSPLACE_X_CRD 10//千の位X座標
