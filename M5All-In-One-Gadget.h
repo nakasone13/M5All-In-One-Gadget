@@ -113,6 +113,8 @@
 #define NOWPLAYYING_Y_CRD 0//NOWPLAYYING座標
 #define SONGNAME_X_CRD 10//NOWPLAYYING座標
 #define SONGNAME_Y_CRD 120//NOWPLAYYING座標
+#define SONGTITLE_X_CRD 10//曲タイトルX座標
+#define SONGTITLE_Y_CRD 120//曲タイトルY座標
 
 // Measure jpg image coordinate
 #define THOUSANDSPLACE_X_CRD 10//千の位X座標
@@ -133,6 +135,7 @@
 #define TIMEMENU_Y_CRD 0//時刻表示Y座標
 #define DATEBACK_X_CRD 120//戻るX座標
 #define DATEBACK_Y_CRD 200//戻るY座標
+
 
 
 

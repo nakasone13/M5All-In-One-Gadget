@@ -192,38 +192,35 @@ mlcd.displayJpgImageCoordinate(MUSIC_NOWSTOPPING_IMG_PATH, NOWSTOPPING_X_CRD, NO
 }
 
 void AppControl::displayMusicStop()
-{mmplay.stopMP3();
+{/*
+if (!mmplay.playMP3()) {
+    mmplay.stopMP3();
+    
+}*/
 }
 
 void AppControl::displayMusicTitle()
-{mmplay.getTitle();
+{
+char* title =mmplay.getTitle();
+mlcd.displayText(title,SONGTITLE_X_CRD,SONGTITLE_Y_CRD);
 }
 
 void AppControl::displayNextMusic()
-{mmplay.selectNextMusic();
+{/*mmplay.selectNextMusic();*/
 }
 
 void AppControl::displayMusicPlay()
-{mmplay.prepareMP3();//音楽ファイルの再生に必要なインスタンスの生成とデコードを開始する
-//音楽ファイルが現在デコード中かを確認し、デコード中ならtrue、を返す
-if(mmplay.isRunningMP3()){//再生中なら
-    mmplay.stopMP3();//STOP処理
-}else{mmplay.prepareMP3();//そうでなければ再生
-
+{/*音楽再生中でない場合
+ */
 }
-if(mmplay.playMP3()){//次の曲がある場合は
-    selectNextMusic();//次の音楽ファイルを開く
-    else
 
-};
-}
 
 //画面の初期化
 void AppControl::displayDateInit()
 {
 mlcd.fillBackgroundWhite();//背景白に変更
-mlcd.displayJpgImageCoordinate(DATE_NOTICE_IMG_PATH, DATEBACK_X_CRD, DATEBACK_Y_CRD);//戻る
-mlcd.displayJpgImageCoordinate(COMMON_BUTTON_BACK_IMG_PATH, PLAY_X_CRD, PLAY_Y_CRD);
+mlcd.displayJpgImageCoordinate(COMMON_BUTTON_BACK_IMG_PATH, DATEBACK_X_CRD, DATEBACK_Y_CRD);//戻る
+mlcd.displayJpgImageCoordinate(DATE_NOTICE_IMG_PATH, TIMEMENU_X_CRD, TIMEMENU_Y_CRD);
 }
 
 
@@ -474,7 +471,7 @@ void AppControl::controlApplication()
                 Serial.println(m_flag_btnA_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
-                delay(2000);
+                
 
                 //左、右、中ボタンのいずれかを押下でEXITへ
                 //setStateMachine(TITLE, EXIT);
@@ -701,6 +698,7 @@ void AppControl::controlApplication()
             Serial.println(m_flag_btnA_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
+                 displayMusicTitle();
 
                 //再生を押すとステートマシン遷移する
                 if(m_flag_btnA_is_pressed){
@@ -716,7 +714,10 @@ void AppControl::controlApplication()
                 //次の曲を押すとステートマシン遷移する
                 if(m_flag_btnC_is_pressed){
                     setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
-                 setStateMachine(MENU, ENTRY);
+                    mmplay.selectNextMusic();
+                    char* title =mmplay.getTitle();
+                    mlcd.displayText(title,SONGTITLE_X_CRD,SONGTITLE_Y_CRD);
+                 //setStateMachine(MUSIC_PLAY, ENTRY);
                 }
                 break;
 
@@ -735,21 +736,32 @@ void AppControl::controlApplication()
                 mlcd.fillBackgroundWhite();//背景白に変更
                 mlcd.displayJpgImageCoordinate(COMMON_BUTTON_STOP_IMG_PATH, PLAY_X_CRD, PLAY_Y_CRD);//再生
                 mlcd.displayJpgImageCoordinate(MUSIC_NOWPLAYING_IMG_PATH, NOWSTOPPING_X_CRD, NOWSTOPPING_Y_CRD);//NOWPlaying
+                displayMusicTitle();
                 setStateMachine(MUSIC_PLAY, DO);
                 break;
 
             case DO:
             Serial.println("MUSIC_PLAY,DO");
+            delay(3000);
             Serial.println(m_flag_btnA_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
                 //音楽再生処理
-                displayMusicPlay();
-                if(m_flag_btnA_is_pressed){
+               
+               mmplay.prepareMP3();
+               while(1){
+                mmplay.playMP3();
+                if((m_flag_btnA_is_pressed==true)||(mmplay.isRunningMP3()==false)){
                     setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
-                
-                 setStateMachine(MUSIC_PLAY, EXIT);
-                }
+                    mmplay.stopMP3();
+                    Serial.println("stopMP3");
+                     setStateMachine(MUSIC_PLAY, EXIT);
+                    break;          
+                    }      
+               }     
+                Serial.println("prepareMP3");
+                delay(3000);
+
                 break;
 
             case EXIT:
@@ -758,10 +770,7 @@ void AppControl::controlApplication()
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
                 setStateMachine(MUSIC_STOP, ENTRY);
-                break;
-
-            default:
-                break;
+                break;           
             }
 
             break;
@@ -827,10 +836,7 @@ void AppControl::controlApplication()
 
                 displayDateInit();//画面呼び出し
                 displayDateUpdate();
-                if(m_flag_btnB_is_pressed){
-                    setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
-                    setStateMachine(DATE, DO);
-                };
+                 setStateMachine(DATE, DO);
                 
                 break;
 
@@ -839,7 +845,13 @@ void AppControl::controlApplication()
             Serial.println(m_flag_btnA_is_pressed);
                 Serial.println(m_flag_btnB_is_pressed);
                 Serial.println(m_flag_btnC_is_pressed);
-                setStateMachine(DATE, EXIT);
+
+                displayDateUpdate();
+                if(m_flag_btnB_is_pressed){
+                    setBtnAllFlgFalse();//すべてのフラグをfalseに戻す
+                    setStateMachine(DATE, EXIT);
+                };
+                
                 break;
 
             case EXIT://何もしない
