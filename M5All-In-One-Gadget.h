@@ -27,7 +27,7 @@
 #define WBGT_ALERT_IMG_PATH "/images/wbgt/alert.jpg"//警戒
 #define WBGT_HIGH_ALERT_IMG_PATH "/images/wbgt/high_alert.jpg"//厳重警戒
 #define WBGT_DANGER_IMG_PATH "/images/wbgt/danger.jpg"//危険
-#define WBGT_TEMPERATURE_IMG_PATH "/images/wbgt/temperature.jpg"//タイトル画面画像
+#define WBGT_TEMPERATURE_IMG_PATH "/images/wbgt/temperature.jpg"//温度
 #define WBGT_HUMIDITY_IMG_PATH "/images/wbgt/humidity.jpg"//湿度
 #define WBGT_DEGREE_IMG_PATH "/images/wbgt/degree.jpg"//C。
 #define WBGT_PERCENT_IMG_PATH "/images/wbgt/percent.jpg"//％
@@ -101,6 +101,35 @@
 #define DECIDE_Y_CRD 200//決定Y座標
 
 // WBGT jpg image coordinate
+#define SAFE_X_CRD 0//安全X座標
+#define SAFE_Y_CRD 100//安全Y座標
+#define HUMIDITY_X_CRD 0//湿度X座標
+#define HUMIDITY_Y_CRD 50//湿度Y座標
+#define DO_X_CRD 253//c
+#define DO_Y_CRD 0//c
+#define PARCENTE_X_CRD 253//%
+#define PARCENTE_Y_CRD 50//%
+#define TEMPERATURE_X_CRD 0//%
+#define TEMPERATURE_Y_CRD 0//%
+#define TEN_X_CRD 120//
+#define TEN_Y_CRD 50//
+#define JU_X_CRD 153//
+#define JU_Y_CRD 50//
+#define ITI_X_CRD 220//
+#define ITI_Y_CRD 50//
+#define NETTYUUSYODOTTO_X_CRD 186//
+#define NETTYUUSYODOTTO_Y_CRD 50//
+#define NETTYUUSYODOTTOSITUDO_X_CRD 186//
+#define NETTYUUSYODOTTOSITUDO_Y_CRD 0//
+
+#define SITUDOITI_Y_CRD 0//
+
+
+
+
+
+
+
 
 // Music jpg image coordinate
 #define PLAY_X_CRD 0//再生X座標
